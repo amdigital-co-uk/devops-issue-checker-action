@@ -66190,7 +66190,7 @@ async function action() {
 
   const workItemTrackingApi = await getWorkItemTrackingApi();
 
-  const hasValidWorkItem = false;
+  let hasValidWorkItem = false;
 
   for (const issue of issues) {
     const workItem = await workItemTrackingApi.getWorkItem(parseInt(issue), [
