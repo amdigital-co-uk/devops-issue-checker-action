@@ -1,0 +1,16 @@
+{
+  "action": "opened",
+  "repository": {
+    "owner": {
+      "login": "user"
+    },
+    "name": "test"
+  },
+  "issue": {
+    "number": 1
+  },
+  "sender": {
+    "type": "User"
+  },
+  "pull_request": { "number": 2, "body": "No Work item here" }
+}

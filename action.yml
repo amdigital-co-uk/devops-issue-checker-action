@@ -1,0 +1,12 @@
+name: 'Devops Issue Checker'
+description: 'Validates the issue has been linked correctly to a PR'
+inputs:
+  azure_devops_org_url:  
+    description: 'The devops org url'
+    required: true
+  devops_access_token: 
+    description: 'The devops access token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
