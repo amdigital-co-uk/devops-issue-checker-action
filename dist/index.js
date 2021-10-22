@@ -66162,21 +66162,15 @@ const vsoNodeApi = __nccwpck_require__(7967);
 
 const ValidWorkItemType = ["Defect", "Change", "Feature"];
 
-let _workItemApi = null;
-
 async function getWorkItemTrackingApi() {
-  if (!_workItemApi) {
-    const orgUrl = core.getInput("org_url");
-    const token = core.getInput("devops_access_token");
+  const orgUrl = core.getInput("azure_devops_org_url");
+  const token = core.getInput("devops_access_token");
 
-    let authHandler = vsoNodeApi.getPersonalAccessTokenHandler(token);
-    let webApi = new vsoNodeApi.WebApi(orgUrl, authHandler);
+  let authHandler = vsoNodeApi.getPersonalAccessTokenHandler(token);
+  let webApi = new vsoNodeApi.WebApi(orgUrl, authHandler);
 
-    await webApi.connect();
-    _workItemApi = await webApi.getWorkItemTrackingApi();
-  }
-
-  return _workItemApi;
+  await webApi.connect();
+  return await webApi.getWorkItemTrackingApi();
 }
 
 async function action() {
@@ -66194,20 +66188,21 @@ async function action() {
     return;
   }
 
+  const workItemTrackingApi = await getWorkItemTrackingApi();
+
   const hasValidWorkItem = false;
 
   for (const issue of issues) {
-    const workItem = await getWorkItemTrackingApi().getWorkItem(
-      parseInt(issue),
-      ["System.WorkItemType"]
-    );
+    const workItem = await workItemTrackingApi.getWorkItem(parseInt(issue), [
+      "System.WorkItemType",
+    ]);
 
     if (!workItem) {
       core.setFailed(`Work Item '${issue}' not found`);
-    }
-
-    if (ValidWorkItemType.includes(workItem.fields["System.WorkItemType"])) {
-      hasValidWorkItem = true;
+    } else {
+      if (ValidWorkItemType.includes(workItem.fields["System.WorkItemType"])) {
+        hasValidWorkItem = true;
+      }
     }
   }
 
