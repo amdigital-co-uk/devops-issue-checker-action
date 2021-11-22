@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const vsoNodeApi = require("azure-devops-node-api");
 
-const ValidWorkItemType = ["Defect", "Change", "Feature"];
+const ValidWorkItemType = ["Defect", "Change", "Feature", "Release"];
 
 async function getWorkItemTrackingApi() {
   const orgUrl = core.getInput("azure_devops_org_url");
