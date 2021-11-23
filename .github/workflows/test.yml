@@ -31,4 +31,4 @@ jobs:
         uses: amdigital-co-uk/code-coverage-action@v1.0
         with:
           path: coverage/cobertura-coverage.xml
-          branch_minimum_threshold: 10
+          branch_minimum_threshold: 0
